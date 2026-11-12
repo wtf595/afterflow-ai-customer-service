@@ -4,6 +4,8 @@
 [![Python](https://img.shields.io/badge/Python-3.9%2B-1d6a4e)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-e88250)](LICENSE)
 
+**[在线作品集](https://wtf595.github.io/afterflow-ai-customer-service/)** · 看产品判断、Workflow、真实界面与评测边界
+
 > 面向 AI 产品经理 / 应用运营岗位的可交互产品原型：用 RAG、固定 Workflow 和 Human-in-the-loop，把售后工单变成有事实、有依据、有风险边界的客服建议。
 
 ![AfterFlow 运营总览](演示截图/01_运营总览.png)

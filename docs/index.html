@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AfterFlow：把售后工单变成有事实、有依据、有风险边界的客服建议。一个可运行的 AI 产品原型。"
+    />
+    <meta name="theme-color" content="#173f31" />
+    <meta
+      property="og:title"
+      content="AfterFlow · 售后工单 AI 辅助处理助手"
+    />
+    <meta
+      property="og:description"
+      content="AI 给判断，客服做确认。Policy RAG、固定 Workflow、Human-in-the-loop 与可追溯的离线评测。"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://wtf595.github.io/afterflow-ai-customer-service/"
+    />
+    <meta
+      property="og:image"
+      content="https://wtf595.github.io/afterflow-ai-customer-service/assets/dashboard.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="canonical"
+      href="https://wtf595.github.io/afterflow-ai-customer-service/"
+    />
+    <title>AfterFlow · 售后工单 AI 辅助处理助手</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href="#top" aria-label="返回顶部">
+        <span class="brand-mark">AF</span>
+        <span><strong>AfterFlow</strong><small>AI 售后协作台</small></span>
+      </a>
+      <nav>
+        <a href="#product">产品判断</a>
+        <a href="#workflow">处理流程</a>
+        <a href="#evaluation">效果评测</a>
+        <a class="github-link" href="https://github.com/wtf595/afterflow-ai-customer-service">查看源码 ↗</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="kicker"><i></i> AI PRODUCT CASE STUDY</span>
+          <h1>让 AI 给判断，<br /><em>让客服做确认。</em></h1>
+          <p>
+            AfterFlow 是一个可运行的电商售后 AI 产品原型。它把客户消息、订单事实、
+            售后政策和风险门禁串成固定 Workflow，在提高处理效率的同时，守住越权承诺的底线。
+          </p>
+          <div class="hero-actions">
+            <a class="primary" href="https://github.com/wtf595/afterflow-ai-customer-service">
+              查看 GitHub 项目
+              <span>↗</span>
+            </a>
+            <a class="secondary" href="#product">先看产品思路</a>
+          </div>
+          <div class="hero-chips">
+            <span>Policy RAG</span>
+            <span>Fixed Workflow</span>
+            <span>Human-in-the-loop</span>
+            <span>Offline Evaluation</span>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-orbit orbit-one"></div>
+          <div class="visual-orbit orbit-two"></div>
+          <div class="visual-center">
+            <small>HUMAN REVIEW</small>
+            <strong>AI 辅助</strong>
+            <span>不自动承诺</span>
+          </div>
+          <div class="node node-1"><b>01</b><span>意图</span></div>
+          <div class="node node-2"><b>02</b><span>订单</span></div>
+          <div class="node node-3"><b>03</b><span>政策</span></div>
+          <div class="node node-4"><b>04</b><span>风险</span></div>
+        </div>
+      </section>
+
+      <section class="proof-strip">
+        <div><strong>6</strong><span>类售后场景</span></div>
+        <div><strong>120</strong><span>条回归样本</span></div>
+        <div><strong>3</strong><span>种方案对比</span></div>
+        <div><strong>0</strong><span>项第三方依赖</span></div>
+      </section>
+
+      <section class="section screenshot-section">
+        <div class="section-heading centered">
+          <span class="eyebrow">THE PRODUCT</span>
+          <h2>不是聊天机器人，<br />而是一张可追溯的判断桌。</h2>
+          <p>总览页把真正需要人工判断的工单推到前面，普通问题交给 Workflow 加速。</p>
+        </div>
+        <div class="browser-frame">
+          <div class="browser-bar"><i></i><i></i><i></i><span>afterflow / 今日概览</span></div>
+          <img src="assets/dashboard.png" alt="AfterFlow 售后运营总览界面" />
+        </div>
+      </section>
+
+      <section class="section" id="product">
+        <div class="section-heading">
+          <span class="eyebrow">PRODUCT DECISION</span>
+          <h2>先决定哪些工作<br />不应该交给 AI。</h2>
+          <p>
+            投诉、监管、法律、赔偿和高金额争议的错误代价很高。首版不让 Agent 自主执行资金操作，
+            而是把风险识别变成确定性的流程门禁。
+          </p>
+        </div>
+        <div class="decision-grid">
+          <article>
+            <span>01</span>
+            <h3>事实先于生成</h3>
+            <p>订单状态、商品和物流信息先进入上下文，减少模型凭空补事实。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>政策必须可追溯</h3>
+            <p>每份建议附带政策编号、章节与相关性分，客服能复核依据。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>风险决定是否自动化</h3>
+            <p>高风险工单停止自动回复并转人工，普通工单仍需客服确认。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>评测优先于演示</h3>
+            <p>对比单轮 Prompt、RAG 与完整 Workflow，同时公开样本局限。</p>
+          </article>
+        </div>
+        <div class="choice-card">
+          <div>
+            <span class="eyebrow light">WHY NOT AGENT</span>
+            <h3>首版选择 RAG + Workflow，<br />而不是自主 Agent。</h3>
+          </div>
+          <ul>
+            <li>售后主流程边界清晰，适合显式编排。</li>
+            <li>退款、赔偿与责任认定必须有人工审批。</li>
+            <li>每一步都能单独测试、观测与降级。</li>
+            <li>先用人工在环证明价值，再评估 Agent 的成本。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section workflow-section" id="workflow">
+        <div class="section-heading centered">
+          <span class="eyebrow">WORKFLOW</span>
+          <h2>五步处理，<br />每一步都留下证据。</h2>
+        </div>
+        <div class="workflow">
+          <article><b>01</b><h3>意图识别</h3><p>识别六类售后诉求，展示命中信号与置信度。</p></article>
+          <i></i>
+          <article><b>02</b><h3>订单核验</h3><p>读取商品、金额、订单状态与物流轨迹。</p></article>
+          <i></i>
+          <article><b>03</b><h3>政策检索</h3><p>BM25 召回并结合意图映射选择政策证据。</p></article>
+          <i></i>
+          <article><b>04</b><h3>草稿生成</h3><p>受订单与政策事实约束，输出可编辑草稿。</p></article>
+          <i></i>
+          <article class="risk"><b>05</b><h3>风险门禁</h3><p>高风险转人工；普通工单等待客服确认。</p></article>
+        </div>
+        <div class="two-shots">
+          <figure>
+            <img src="assets/evaluation.png" alt="三种 AI 方案的评测结果" />
+            <figcaption>方案对比：让选择有证据，而不是靠术语判断。</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/risk-review.png" alt="高风险投诉工单转人工审核" />
+            <figcaption>风险门禁：停止自动回复，保留依据与处理记录。</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" id="evaluation">
+        <div class="section-heading">
+          <span class="eyebrow">OFFLINE EVALUATION</span>
+          <h2>结果不是重点，<br />口径才是。</h2>
+          <p>
+            120 条样本来自 24 个语义模板的 5 种表达变体。它用于验证流程回归，
+            不是独立留出集，也不代表生产准确率。
+          </p>
+        </div>
+        <div class="score-table">
+          <div class="score-head">
+            <span>方案</span><span>任务完成率</span><span>风险判断</span><span>关键错误率</span>
+          </div>
+          <div><strong>单轮 Prompt</strong><span>44.2%</span><span>79.2%</span><span>20.8%</span></div>
+          <div><strong>RAG</strong><span>58.3%</span><span>79.2%</span><span>20.8%</span></div>
+          <div class="best"><strong>RAG + Workflow</strong><span>83.3%</span><span>100%</span><span>0%</span></div>
+        </div>
+        <div class="boundary-note">
+          <strong>主动披露边界</strong>
+          <p>
+            当前实现使用规则分类、BM25 和模板草稿。真实上线前需用脱敏历史工单独立标注，
+            观察采纳率、修改量、处理时长、漏接管率与单工单成本。
+          </p>
+        </div>
+      </section>
+
+      <section class="section takeaway">
+        <span class="eyebrow light">WHAT I PRACTICED</span>
+        <h2>从技术理解，到产品取舍。</h2>
+        <div class="takeaway-grid">
+          <article><span>产品</span><h3>定义范围与非目标</h3><p>六类高频场景；不做自动退款、不自动对客发送、不自主跨系统操作。</p></article>
+          <article><span>技术</span><h3>组合可用能力</h3><p>BM25、意图映射、受约束生成、风险规则、失败降级与人工作业。</p></article>
+          <article><span>数据</span><h3>建立评测口径</h3><p>任务成功、政策覆盖、风险判断与关键错误分开观测。</p></article>
+        </div>
+        <a class="primary final-cta" href="https://github.com/wtf595/afterflow-ai-customer-service">
+          在 GitHub 查看完整实现
+          <span>↗</span>
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      <div><strong>AfterFlow</strong><span>AI 售后工单辅助处理原型</span></div>
+      <p>所有客户、订单和政策均为虚构数据 · 不代表生产部署或真实业务效果</p>
+    </footer>
+  </body>
+</html>

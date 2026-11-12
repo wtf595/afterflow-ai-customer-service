@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AfterFlow 售后工单 AI 辅助处理助手：RAG、Workflow、风险门禁与效果评测。"
+    />
+    <title>AfterFlow · 售后协作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M9 20.5c3.8-7.4 18.2-7.4 22 0" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              <path d="M12.5 25.5c3.4-4.5 11.6-4.5 15 0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+              <circle cx="20" cy="12.5" r="2.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <strong>AfterFlow</strong>
+            <span>售后协作台</span>
+          </div>
+        </div>
+
+        <div class="workspace-chip">
+          <span class="workspace-avatar">木</span>
+          <div>
+            <strong>木屿生活</strong>
+            <span>演示工作区</span>
+          </div>
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <nav class="nav" aria-label="主要导航">
+          <p class="nav-label">工作台</p>
+          <button class="nav-item active" data-view="dashboard">
+            <span class="nav-icon">
+              <svg viewBox="0 0 20 20"><path d="M3.5 3.5h5v5h-5zm8 0h5v5h-5zm-8 8h5v5h-5zm8 0h5v5h-5z"/></svg>
+            </span>
+            总览
+          </button>
+          <button class="nav-item" data-view="tickets">
+            <span class="nav-icon">
+              <svg viewBox="0 0 20 20"><path d="M4 3.5h12v13H4zM6.5 7h7M6.5 10h7M6.5 13h4"/></svg>
+            </span>
+            工单处理
+            <span class="nav-count" id="pending-count">0</span>
+          </button>
+          <p class="nav-label nav-label-spaced">验证</p>
+          <button class="nav-item" data-view="evaluation">
+            <span class="nav-icon">
+              <svg viewBox="0 0 20 20"><path d="M3.5 16.5v-5h3v5zm5 0v-9h3v9zm5 0v-13h3v13z"/></svg>
+            </span>
+            效果评测
+          </button>
+          <button class="nav-item" data-view="method">
+            <span class="nav-icon">
+              <svg viewBox="0 0 20 20"><path d="M10 2.5 17 6v4.3c0 4.2-3 6.3-7 7.2-4-.9-7-3-7-7.2V6z"/><path d="m7.3 10 1.7 1.7 3.8-3.8"/></svg>
+            </span>
+            方案说明
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <span class="status-dot"></span>
+          <div>
+            <strong id="engine-mode">正在连接</strong>
+            <span id="engine-detail">读取本地引擎状态…</span>
+          </div>
+        </div>
+        <p class="sidebar-footnote">Synthetic demo · No customer data</p>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="page-eyebrow">工作台 / 今日概览</p>
+            <h1 id="page-title">售后运营总览</h1>
+          </div>
+          <div class="topbar-actions">
+            <div class="date-chip">
+              <span class="date-dot"></span>
+              <span>2026年11月12日</span>
+            </div>
+            <button class="icon-button" id="reset-demo" title="重置演示数据" aria-label="重置演示数据">
+              <svg viewBox="0 0 20 20"><path d="M16 7.5A6.5 6.5 0 1 0 16.3 12"/><path d="M16 3.7v3.8h-3.8"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <section class="view active" id="view-dashboard">
+          <article class="hero-card">
+            <div class="hero-copy">
+              <span class="hero-kicker"><i></i> 今日判断队列</span>
+              <h2>先处理需要判断的工单，<br />再让 AI 加速执行。</h2>
+              <p>
+                从意图识别到政策依据，每一步都保留可追溯记录。
+                高风险工单在生成承诺前退出自动流程。
+              </p>
+              <button class="primary-button hero-button" id="hero-start">
+                进入处理队列
+                <svg viewBox="0 0 20 20"><path d="M4 10h11m-4-4 4 4-4 4"/></svg>
+              </button>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="orbit orbit-one"></div>
+              <div class="orbit orbit-two"></div>
+              <div class="flow-node node-intent">
+                <span>01</span>
+                <strong>意图</strong>
+              </div>
+              <div class="flow-node node-order">
+                <span>02</span>
+                <strong>订单</strong>
+              </div>
+              <div class="flow-node node-policy">
+                <span>03</span>
+                <strong>政策</strong>
+              </div>
+              <div class="flow-node node-risk">
+                <span>04</span>
+                <strong>风险</strong>
+              </div>
+              <div class="center-mark">AF</div>
+            </div>
+          </article>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <div class="metric-icon mint">
+                <svg viewBox="0 0 20 20"><path d="M4 3.5h12v13H4zM6.5 7h7M6.5 10h7M6.5 13h4"/></svg>
+              </div>
+              <div>
+                <span>待处理工单</span>
+                <strong id="metric-pending">—</strong>
+                <small>演示队列</small>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon peach">
+                <svg viewBox="0 0 20 20"><path d="M10 2.5 18 16.5H2z"/><path d="M10 7v4.5M10 14v.2"/></svg>
+              </div>
+              <div>
+                <span>需重点关注</span>
+                <strong id="metric-risk">—</strong>
+                <small>较高 / 紧急优先级</small>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon blue">
+                <svg viewBox="0 0 20 20"><path d="M3.5 16.5v-5h3v5zm5 0v-9h3v9zm5 0v-13h3v13z"/></svg>
+              </div>
+              <div>
+                <span>工作流任务完成率</span>
+                <strong id="metric-success">—</strong>
+                <small id="metric-success-note">离线回归样本</small>
+              </div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon violet">
+                <svg viewBox="0 0 20 20"><path d="M10 2.5 17 6v4.3c0 4.2-3 6.3-7 7.2-4-.9-7-3-7-7.2V6z"/><path d="m7.3 10 1.7 1.7 3.8-3.8"/></svg>
+              </div>
+              <div>
+                <span>高风险未接管</span>
+                <strong id="metric-critical">—</strong>
+                <small>越低越安全</small>
+              </div>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="panel queue-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">TODAY'S QUEUE</span>
+                  <h3>优先处理</h3>
+                </div>
+                <button class="text-button" data-go-tickets>查看全部 <span>→</span></button>
+              </div>
+              <div id="dashboard-queue" class="mini-list"></div>
+            </article>
+
+            <article class="panel decision-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">DESIGN DECISION</span>
+                  <h3>为什么首版不做自主 Agent？</h3>
+                </div>
+                <span class="soft-badge">产品取舍</span>
+              </div>
+              <div class="decision-flow">
+                <div class="decision-step">
+                  <span class="decision-number">1</span>
+                  <div><strong>路径固定</strong><p>售后政策与订单查询流程可预先定义。</p></div>
+                </div>
+                <div class="decision-step">
+                  <span class="decision-number">2</span>
+                  <div><strong>错误代价高</strong><p>错误退款、赔偿和责任认定不可接受。</p></div>
+                </div>
+                <div class="decision-step">
+                  <span class="decision-number">3</span>
+                  <div><strong>先验证价值</strong><p>用 Workflow 验证准确率、时长与人工修改量。</p></div>
+                </div>
+              </div>
+              <div class="decision-conclusion">
+                <svg viewBox="0 0 20 20"><path d="M10 2.5 17 6v4.3c0 4.2-3 6.3-7 7.2-4-.9-7-3-7-7.2V6z"/><path d="m7.3 10 1.7 1.7 3.8-3.8"/></svg>
+                <div>
+                  <strong>当前结论：Workflow + Human-in-the-loop</strong>
+                  <span>Agent 保留为“跨系统复杂工单”的后续实验，不作为 v1 卖点。</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <article class="panel evaluation-preview">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">EVIDENCE, NOT VIBES</span>
+                <h3>方案不是凭感觉选的</h3>
+              </div>
+              <button class="text-button" data-go-evaluation>打开评测报告 <span>→</span></button>
+            </div>
+            <div class="preview-methods" id="preview-methods"></div>
+          </article>
+        </section>
+
+        <section class="view" id="view-tickets">
+          <div class="page-intro">
+            <div>
+              <span class="section-kicker">TICKET WORKSPACE</span>
+              <h2>让 AI 给判断，让客服做确认。</h2>
+              <p>选择一个工单，运行完整的五步处理流程。所有政策引用与风险记录都会保留。</p>
+            </div>
+            <div class="legend-row">
+              <span><i class="legend-dot green"></i>普通</span>
+              <span><i class="legend-dot orange"></i>较高</span>
+              <span><i class="legend-dot red"></i>紧急</span>
+            </div>
+          </div>
+
+          <div class="ticket-workspace">
+            <aside class="ticket-inbox panel">
+              <div class="inbox-toolbar">
+                <div>
+                  <h3>收件箱</h3>
+                  <span id="inbox-summary">0 个待处理</span>
+                </div>
+                <button class="filter-button" id="filter-button" aria-label="筛选工单">
+                  <svg viewBox="0 0 20 20"><path d="M3 5h14M6 10h8M8.5 15h3"/></svg>
+                </button>
+              </div>
+              <div class="filter-tabs" id="filter-tabs">
+                <button class="active" data-filter="all">全部</button>
+                <button data-filter="pending">待处理</button>
+                <button data-filter="risk">风险</button>
+              </div>
+              <div class="ticket-list" id="ticket-list"></div>
+            </aside>
+
+            <article class="ticket-detail panel" id="ticket-detail">
+              <div class="empty-state">
+                <div class="empty-illustration">
+                  <svg viewBox="0 0 64 64"><path d="M13 17h38v32H13z"/><path d="M21 25h22M21 33h16M21 41h10"/><circle cx="48" cy="15" r="8"/><path d="M45 15h6M48 12v6"/></svg>
+                </div>
+                <h3>选择一张工单开始</h3>
+                <p>系统会依次完成意图识别、订单核验、政策检索、草稿生成和风险审阅。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-evaluation">
+          <div class="page-intro evaluation-intro">
+            <div>
+              <span class="section-kicker">OFFLINE EVALUATION</span>
+              <h2>一次可复现的方案对比实验。</h2>
+              <p>120 条离线回归样本，来自 24 个语义模板 × 5 种表达；比较单轮 Prompt、RAG 与完整 Workflow。</p>
+            </div>
+            <div class="synthetic-note">
+              <span>SYNTHETIC</span>
+              <p>客户、订单和政策均为虚构<br />数据结果不代表线上生产表现</p>
+            </div>
+          </div>
+
+          <div class="evaluation-summary">
+            <div>
+              <span>离线回归集</span>
+              <strong id="eval-total">120</strong>
+              <small>24 模板 × 5 种表达</small>
+            </div>
+            <div>
+              <span>高风险样本</span>
+              <strong id="eval-risk-cases">—</strong>
+              <small>投诉 / 高金额场景</small>
+            </div>
+            <div>
+              <span>最佳方案</span>
+              <strong id="eval-best">—</strong>
+              <small>按任务完成率</small>
+            </div>
+            <div>
+              <span>关键错误</span>
+              <strong id="eval-critical">—</strong>
+              <small>高风险未接管</small>
+            </div>
+          </div>
+
+          <article class="panel comparison-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">METHOD COMPARISON</span>
+                <h3>任务完成率对比</h3>
+              </div>
+              <span class="soft-badge">规则可复现</span>
+            </div>
+            <div class="method-bars" id="method-bars"></div>
+            <div class="comparison-grid" id="comparison-grid"></div>
+          </article>
+
+          <div class="evaluation-lower-grid">
+            <article class="panel intent-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">BREAKDOWN</span>
+                  <h3>Workflow 分场景结果</h3>
+                </div>
+              </div>
+              <div id="intent-breakdown" class="intent-breakdown"></div>
+            </article>
+            <article class="panel protocol-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">EVALUATION PROTOCOL</span>
+                  <h3>评测口径</h3>
+                </div>
+              </div>
+              <div class="protocol-list">
+                <div><span>01</span><p><strong>任务完成</strong>意图正确、政策证据完整，且风险处置正确。</p></div>
+                <div><span>02</span><p><strong>关键错误</strong>高风险工单未被识别或未进入人工接管。</p></div>
+                <div><span>03</span><p><strong>Token 估算</strong>按输入政策文本和消息长度估算，不是账单数据。</p></div>
+              </div>
+              <div class="protocol-callout">
+                <strong>已知局限</strong>
+                <p>样本由与规则同源的设计生成，不是独立留出集。当前结果只证明流程可复现，不代表生产准确率；接入真实 LLM 或真实工单后必须重新评测。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-method">
+          <div class="page-intro">
+            <div>
+              <span class="section-kicker">PRODUCT DECISION RECORD</span>
+              <h2>技术能力，最终体现在取舍。</h2>
+              <p>这不是一份“术语大全”，而是一套围绕业务风险、效果证据和成本约束展开的产品方案。</p>
+            </div>
+          </div>
+
+          <article class="method-hero panel">
+            <div class="method-hero-copy">
+              <span class="soft-badge">推荐方案</span>
+              <h3>RAG + Workflow<br /><em>而不是自主 Agent</em></h3>
+              <p>固定流程能覆盖多数售后问题；只有任务步骤无法预先定义时，Agent 的自主规划才值得承担额外成本与不可控性。</p>
+            </div>
+            <div class="layer-stack">
+              <div><span>05</span><strong>应用与编排</strong><small>工单界面 · Workflow · Human-in-the-loop</small></div>
+              <div><span>04</span><strong>模型服务</strong><small>约束草稿 · 降级 · 禁止承诺检查</small></div>
+              <div><span>03</span><strong>模型能力</strong><small>意图分类 · 文本生成 · 能力边界</small></div>
+              <div><span>02</span><strong>数据与上下文</strong><small>政策库 · 订单核验 · BM25 RAG</small></div>
+              <div><span>01</span><strong>硬件与算力</strong><small>仅作为成本与部署约束，不深入规格</small></div>
+            </div>
+          </article>
+
+          <div class="method-grid">
+            <article class="panel scope-panel">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">SCOPE</span>
+                  <h3>首版做什么</h3>
+                </div>
+              </div>
+              <ul class="check-list">
+                <li><span>✓</span>识别二类售后意图与置信度</li>
+                <li><span>✓</span>查询订单状态和基础物流事实</li>
+                <li><span>✓</span>检索政策并展示依据来源</li>
+                <li><span>✓</span>生成可编辑客服草稿</li>
+                <li><span>✓</span>高风险识别与人工接管</li>
+              </ul>
+            </article>
+            <article class="panel scope-panel non-goals">
+              <div class="panel-heading">
+                <div>
+                  <span class="section-kicker">NON-GOALS</span>
+                  <h3>首版明确不做</h3>
+                </div>
+              </div>
+              <ul class="check-list">
+                <li><span>×</span>自动退款或执行资金操作</li>
+                <li><span>×</span>未经授权承诺赔偿</li>
+                <li><span>×</span>无人审阅直接对客发送</li>
+                <li><span>×</span>训练私有硬件模型</li>
+                <li><span>×</span>让 Agent 自主跨系统操作</li>
+              </ul>
+            </article>
+          </div>
+
+          <article class="panel artifacts-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="section-kicker">DELIVERABLES</span>
+                <h3>这个项目能拿出的证据</h3>
+              </div>
+            </div>
+            <div class="artifact-grid">
+              <div><span>01</span><strong>产品判断</strong><p>PRD、非目标、Workflow / Agent 取舍记录</p></div>
+              <div><span>02</span><strong>技术理解</strong><p>政策 RAG、订单核验、风险门禁与降级路径</p></div>
+              <div><span>03</span><strong>数据能力</strong><p>120 条离线回归样本、标签口径与错误分类</p></div>
+              <div><span>04</span><strong>结果意识</strong><p>任务完成率、关键错误率与 Token 估算对比</p></div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
